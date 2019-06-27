@@ -58,7 +58,7 @@ This command takes in a movie title and returns:
 
 This command reads whatever is in the random.txt folder and reads it as long as it's in the format of `action,"Title"`
 
-![Image of Command line](/images/Randomscreen.png)
+![Image of Command line](/images/RandomScreen.png)
 
 ![Image of Notepad](/images/notepadScreen.png)
 
