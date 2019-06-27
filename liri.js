@@ -4,6 +4,7 @@ const keys = require('./key');
 const Spotify = require('node-spotify-api');
 const axios = require('axios');
 const datefns = require('date-fns');
+const fs = require('fs');
 
 let spotify = new Spotify(keys.spotify);
 let omdbKey = keys.omdb.key;
@@ -49,11 +50,11 @@ var liri = {
     },
 
     'movie-this': function () {
-        if(theQuery.length === 0) {
+        if (theQuery.length === 0) {
             theQuery = 'Mr.Nobody'
         }
         theQuery = theQuery.join('-')
-        let queryURL = 'http://www.omdbapi.com/?t=' + theQuery + '&apikey='+ omdbKey;
+        let queryURL = 'http://www.omdbapi.com/?t=' + theQuery + '&apikey=' + omdbKey;
         axios.get(queryURL).then(function (response) {
             let data = response.data;
             let tomatoTracker = false;
@@ -76,13 +77,19 @@ var liri = {
                 `Language: ${data.Language} \n\n`,
                 `Plot: ${data.Plot} \n\n`,
                 `Actors: ${data.Actors} \n\n`
-             
+
             )
         })
     },
 
     'do-what-it-says': function () {
-
+        fs.readFile('random.txt', 'utf8' ,(err, data) => {
+            if (err) throw err;
+            let contents = data.split(',')
+            let askLiri = contents[0];
+            let query = contents[1].split(" ");
+            liri[askLiri](query);
+        });
     }
 }
 
